@@ -13,22 +13,32 @@ class TutorialViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var dummySpaceView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var backgroundView: UIView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         scrollView.delegate = self
+        
+        backgroundView.layer.cornerRadius = 15
         configureScrollView()
     }
     
     @IBAction func actionValueChanged(_ sender: UIPageControl) {
         
         let current = sender.currentPage
-        scrollView.setContentOffset(CGPoint(x: CGFloat(current)*view.frame.size.width, y: 0), animated: true)
+        scrollView.setContentOffset(CGPoint(x: CGFloat(current)*(view.frame.size.width-80), y: 0), animated: true)
     }
+    
+    @IBAction func actionBack(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     private func configureScrollView() {
         
+        scrollView.layer.cornerRadius = 15
         stackView.removeArrangedSubview(dummySpaceView)
         dummySpaceView.removeFromSuperview()
         
@@ -42,7 +52,7 @@ class TutorialViewController: UIViewController {
         for i in 0..<4 {
             
             let page = UIView()
-            page.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+            page.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-80).isActive = true
             page.backgroundColor = colors[i]
             stackView.addArrangedSubview(page)
         }
